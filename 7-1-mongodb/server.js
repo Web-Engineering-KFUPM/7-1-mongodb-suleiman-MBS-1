@@ -202,3 +202,57 @@
 
 
 // delete document
+
+// import mongoose
+import mongoose from "mongoose";
+
+// establish connection
+// 🛑 IMPORTANT: You MUST change "YOUR_USERNAME" and "YOUR_PASSWORD" to the ones you made in TODO-2!
+// Also, make sure to add your specific cluster address instead of "cluster0.xxxx.mongodb.net"
+mongoose.connect("mongodb+srv://MBS-alzaid:MBSMBS@mohammedalzaid.ttoi4vr.mongodb.net/labDB")
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch(err => console.log(err));
+
+// define schema
+const studentSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  major: String
+});
+const Student = mongoose.model("Student", studentSchema);
+
+// create document
+async function createStudents() {
+  await Student.insertMany([
+    { name: "Ali", age: 21, major: "CS" },
+    { name: "Sara", age: 23, major: "SE" }
+  ]);
+  console.log("✅ Inserted Students");
+}
+
+// // read document
+ async function readStudents() {
+   const all = await Student.find();
+   console.log("✅ All Students:", all);
+ }
+
+// // update document
+ async function updateStudent() {
+   await Student.updateOne({ name: "Ali" }, { age: 22 });
+   console.log("✅ Updated Ali");
+ }
+
+// delete document
+ async function deleteStudent() {
+   await Student.deleteOne({ name: "Sara" });
+   console.log("✅ Deleted Sara");
+ }
+
+// --- RUNNING THE FUNCTIONS ---
+// The lab asks you to test these one by one. 
+// Uncomment ONE function below, run `node server.js` in your terminal to take your screenshot, then comment it out and move to the next one!
+
+createStudents();
+readStudents();
+updateStudent();
+deleteStudent();
